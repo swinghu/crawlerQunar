@@ -65,7 +65,7 @@ for s in range(sa,sb):
         total_page = sp_json_j['data']['types']['all']/20
         print "There are totally %d pages\n " % total_page
         
-        #limit total pages to no more than 10, you can 
+        #limit total pages to no more than 10, you can comment out this limit to get all the data on qunar.com
         page_limit = 10
         if total_page >= page_limit:
             total_page = page_limit
@@ -86,12 +86,13 @@ for s in range(sa,sb):
             for line in r.iter_lines():
                 if line:
                     r_get = r_get + line
-        
+            
+            #save the data into MongoDB
             r_get_dic = json.loads(r_get) 
             r_get_dic['startcity'] = st_c[s]
             r_get_dic['endcity'] = ed_c[e]
             tourlistId = tourcoll.insert(r_get_dic)
-            #print "Page %d successfully stroed at mydb-tour-id = %s\n" % (page_num, tourlistId)
+            
             if tourlistId:
                 print '>'
             else:
